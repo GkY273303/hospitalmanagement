@@ -96,7 +96,7 @@ export default function Register(props) {
       });
 
       const data = await res.json();
-
+      console.log(data);
       if (data.errors) {
         setLoading(false);
         setErrors(data.errors);

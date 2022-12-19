@@ -8,6 +8,8 @@ const registerRoute = require("./routes/registerRoute");
 const doctorRoute = require("./routes/doctorRoute");
 const adminRoutes = require("./routes/adminRoutes");
 const logoutRoute = require("./routes/logoutRoute");
+const { requireAdminAuth }=require("./middlewares/adminAuthMiddleware");
+const cors=require('cors');
 const app = express();
 
 dotenv.config({ path: "./config.env" });
@@ -15,6 +17,7 @@ dotenv.config({ path: "./config.env" });
 app.use(express.static("public"));
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors());
 
 const dbURI = process.env.DATABASE;
 const port = process.env.PORT || 5000;
@@ -34,6 +37,8 @@ mongoose
     });
   });
 
+
+app.get("/",(req,res)=>res.send("server listening at 5000 port!"));
 app.use(authRoutes);
 app.use(registerRoute);
 app.use(doctorRoute);
@@ -41,10 +46,10 @@ app.use(patientRoutes);
 app.use(adminRoutes);
 app.use(logoutRoute);
 
-if (process.env.NODE_ENV == "production") {
-  app.use(express.static("client/build"));
-  const path = require("path");
-  app.get("*", function (req, res) {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-  });
-}
+// if (process.env.NODE_ENV == "production") {
+//   app.use(express.static("client/build"));
+//   const path = require("path");
+//   app.get("*", function (req, res) {
+//     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+//   });
+// }

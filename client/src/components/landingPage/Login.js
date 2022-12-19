@@ -60,8 +60,9 @@ export default function Login(props) {
   };
 
   const handleDoctorAdminLogin = async (email, password, path) => {
+    console.log(path);
     setLoading(true);
-    const res = await fetch(path, {
+    const res = await fetch( path, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -72,7 +73,9 @@ export default function Login(props) {
       }),
     });
 
+
     const data = await res.json();
+    console.log(data);
     if (data.err) {
       setLoading(false);
       props.settoastCondition({

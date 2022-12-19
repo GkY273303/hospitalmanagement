@@ -62,6 +62,7 @@ module.exports.patient_register = async (req, res) => {
       contactPerson,
     });
     const token = createToken(patient._id);
+    console.log(token);
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
     res.status(200).json({ patient });
   } catch (err) {
